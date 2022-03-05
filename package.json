@@ -2,10 +2,10 @@
   "name": "proyectonode-augusto.ojeda",
   "version": "1.0.0",
   "description": "",
-  "main": "Desafio03.js",
+  "main": "proyectonode-augusto.ojeda",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node servidor.js"
+    "start": "nodemon servidor.js"
   },
   "repository": {
     "type": "git",

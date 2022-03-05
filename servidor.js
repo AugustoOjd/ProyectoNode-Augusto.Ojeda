@@ -1,6 +1,9 @@
 const express = require('express')
-const cont = require('./contenedor')
 const app = express()
+const Contenedor = require('./contenedor')
+const contProductos = new Contenedor('./productos.txt')
+
+let prueba = 'El servidor esta funcionando'
 
 const port = 8080
 const server = app.listen(port, ()=>{
@@ -10,11 +13,16 @@ const server = app.listen(port, ()=>{
 server.on("error", error=> console.log(`error del servidor ${error}`))
 
 app.get('/productos', (req, res)=>{
-    res.send(cont.all)
+    res.send(contProductos.getAll())
+
 })
 
 app.get('/productoRandom', (req, res)=>{
-    res.send(cont.random)
+    res.send(contProductos.getRandom())
+})
+
+app.get('/', (req, res)=>{
+    res.send({prueba})
 })
 
 

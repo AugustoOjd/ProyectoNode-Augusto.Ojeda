@@ -30,11 +30,10 @@ class Contenedor{
 
 }
 
-const productos = new Contenedor ('../productos.txt')
+const productos = new Contenedor ('./productos.txt')
 
 
 productos.getAll().then(res=> console.log(res))
 productos.getRandom().then(res=> console.log(res))
 
-module.exports.all = productos.getAll
-module.exports.random = productos.getRandom
+module.exports = Contenedor
