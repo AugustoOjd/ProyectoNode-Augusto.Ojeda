@@ -1,0 +1,21 @@
+body{
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.contenedor{
+    border-radius: 10px;
+    margin-top: 50px; 
+    padding: 10px;
+    background-color: rgb(171, 217, 243);
+    width: 300px; 
+    height: 300px;
+}
+
+.boxForm{
+    font-size: 20px;
+    display: flex; 
+    justify-content: space-between;
+    flex-flow: column;
+}

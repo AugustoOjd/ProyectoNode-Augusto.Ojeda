@@ -1,39 +1,73 @@
-const fs = require('fs')
 
 class Contenedor{
-    constructor(ruta){
-        this.ruta = ruta
+    constructor(){
+        this.products = []
+        this.id = 0
     }
 
-    async getAll(){
+    getAll(){
         try{
-            const datos = await fs.promises.readFile(this.ruta, 'utf-8')
-            const conver = JSON.parse(datos)
-            return conver
+            return this.products
         }catch(e){
-            return console.log(`No hay archivos ${e.message}`)
+            return console.log(`Hubo un error en cargar todo los productos ${e.message}`)
         }
     }
 
-    async getRandom(){
+    getById(id){
         try{
-            const datos = await fs.promises.readFile(this.ruta, 'utf-8')
-            const conver = JSON.parse(datos)
-            const random = conver[Math.round(Math.random()*conver.length)];
-            return random
+            return this.products.find(e=> e.id === id)
+        }catch(e){
+            return console.log(`No se encuentra el producto`)
         }
-        catch(e){
-            return console.log(`error en random: ${e.message}`)
+    }
+
+    postProduct(obj){
+        try{
+            this.id++
+            const newProduct = {
+                title: obj.title,
+                price: obj.price,
+                thumbnail: obj.img,
+                id: this.id
+            }
+            this.products.push(newProduct)
+            return newProduct
+        }catch(e){
+            console.log(`Hubo un error en guarda producto ${e.message}`)
+        }
+    }
+
+    putProduct(product){
+        try{
+            this.products.find(e.id === product)
+            this.products.push(product)
+            return product
+        }catch(e){
+            console.log(`Hubo un error en actualizar producto ${e.message}`)
+        }
+    }
+
+    deleteById(id){
+        try{
+            return this.products.filter(e.id !== id)
+
+            
+
+        }catch(e){
+            return console.log(`Hubo un error en eliminar producto ${e.message}`)
         }
     }
 
 
 }
 
-const productos = new Contenedor ('./productos.txt')
+const productos = new Contenedor ()
 
 
-productos.getAll().then(res=> console.log(res))
-productos.getRandom().then(res=> console.log(res))
+productos.getAll()
+productos.getById()
+// productos.postProduct()
+// productos.putProduct()
+// productos.deleteById()
 
 module.exports = Contenedor
