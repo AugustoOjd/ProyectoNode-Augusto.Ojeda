@@ -37,11 +37,13 @@ class Contenedor{
         }
     }
 
-    putProduct(product){
+    putProduct(id, product){
         try{
-            this.products.find(e.id === product)
-            this.products.push(product)
-            return product
+
+            const indice = this.products.findIndex(e=> e.id == id)
+            const actualizar = this.products.splice(indice, 1, {product})
+            
+            return actualizar
         }catch(e){
             console.log(`Hubo un error en actualizar producto ${e.message}`)
         }
@@ -49,10 +51,7 @@ class Contenedor{
 
     deleteById(id){
         try{
-            return this.products.filter(e.id !== id)
-
-            
-
+            return this.products.filter(e=> e.id !== id)
         }catch(e){
             return console.log(`Hubo un error en eliminar producto ${e.message}`)
         }
@@ -66,8 +65,8 @@ const productos = new Contenedor ()
 
 productos.getAll()
 productos.getById()
-// productos.postProduct()
-// productos.putProduct()
-// productos.deleteById()
+productos.postProduct()
+productos.putProduct()
+productos.deleteById()
 
 module.exports = Contenedor

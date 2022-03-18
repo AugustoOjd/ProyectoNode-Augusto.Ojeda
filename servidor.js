@@ -33,23 +33,35 @@ server.on("error", error=> console.log(`error del servidor ${error}`))
 routers.get('/:id', (req, res)=>{
     //devuelve un producto segun su id
     try{
-        const getId = res.send(contProductos.getById(req.params.id))
-        return res.status(statusOk).json(getId)
+        const getId = contProductos.getById(parseInt(req.params.id))
+        if(getId){
+            return res.status(statusOk).json(getId)
+        }else{
+            return res.status(errUsuario).json('No hay productos disponibles')
+        }
+        
     }catch(e){
         return res.status(errUsuario).json(e.message)
     }
     
     })
-    // .put('/:id',(req, res)=>{
-    //     //recibe y actualiza un producto según su id.
+routers.put('/:id',(req, res)=>{
+        //recibe y actualiza un producto según su id.
+        try{
+            const act = contProductos.putProduct(parseInt(req.params.id))
+            res.status(statusOk).json(act)
+        }
+        catch(e){
+            console.log('hubo un error en actualizar', e.message)
+        }
     
-    // })
+    })
     
 routers
     .delete('/:id',(req, res)=>{
         //elimina un producto según su id.
         try{
-            const borrar = res.send(contProductos.deleteById(req.params.id))
+            const borrar = contProductos.deleteById(parseInt(req.params.id))
             return res.status(statusOk).json(borrar)
         }
         catch(e){
@@ -79,6 +91,10 @@ routers
             return res.status(errServer).json(e.message)
         }
     })
+
+routers.get('*', (req, res)=>{
+    res.send('Pagina no encontrada')
+})
 
     // app.get((req, res)=>{
     // res.sendFile(__dirname + '/public')
