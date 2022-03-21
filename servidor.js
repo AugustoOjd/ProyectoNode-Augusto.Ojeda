@@ -48,7 +48,7 @@ routers.get('/:id', (req, res)=>{
 routers.put('/:id',(req, res)=>{
         //recibe y actualiza un producto según su id.
         try{
-            const act = contProductos.putProduct(parseInt(req.params.id))
+            const act = contProductos.putProduct(parseInt(req.params.id), req.body)
             res.status(statusOk).json(act)
         }
         catch(e){

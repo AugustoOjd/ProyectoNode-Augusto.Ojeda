@@ -27,7 +27,7 @@ class Contenedor{
             const newProduct = {
                 title: obj.title,
                 price: obj.price,
-                thumbnail: obj.img,
+                thumbnail: obj.thumbnail,
                 id: this.id
             }
             this.products.push(newProduct)
@@ -40,8 +40,15 @@ class Contenedor{
     putProduct(id, product){
         try{
 
+            const newProduct = {
+                title: product.title,
+                price: product.price,
+                thumbnail: product.thumbnail,
+                id: product.id
+            }
+
             const indice = this.products.findIndex(e=> e.id == id)
-            const actualizar = this.products.splice(indice, 1, {product})
+            const actualizar = this.products.splice(indice, 1, newProduct)
             
             return actualizar
         }catch(e){
