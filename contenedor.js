@@ -25,13 +25,13 @@ class Contenedor{
         try{
             this.id++
             const newProduct = {
-                title: obj.title,
-                price: obj.price,
+                nombre: obj.nombre,
+                precio: obj.precio,
                 thumbnail: obj.thumbnail,
-                id: this.id
+                id: this.id,
             }
             this.products.push(newProduct)
-            return newProduct
+            return this.products
         }catch(e){
             console.log(`Hubo un error en guarda producto ${e.message}`)
         }
@@ -41,8 +41,8 @@ class Contenedor{
         try{
 
             const newProduct = {
-                title: product.title,
-                price: product.price,
+                nombre: product.nombre,
+                precio: product.precio,
                 thumbnail: product.thumbnail,
                 id: product.id
             }

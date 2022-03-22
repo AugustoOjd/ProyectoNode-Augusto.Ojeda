@@ -6,6 +6,9 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use('/api/productos', routers)
 
+const Contenedor = require('./contenedor')
+const contProductos = new Contenedor()
+
 
 app.set('views', './views')
 app.set('view engine', 'pug')
@@ -16,16 +19,30 @@ const errServer = 500
 
 // app.use('/static', express.static(__dirname + '/views'))
 
-const productos = []
+// const productos = []
 
+
+// app.get('/', (req, res)=>{
+//     res.render('form', {productos})
+// })
+
+// routers.post('/', (req, res)=>{
+//     productos.push(req.body)
+//     res.render('form', {productos})
+// })
 
 app.get('/', (req, res)=>{
-    res.render('form', {productos})
+    res.render('form')
+})
+
+routers.get('/', (req, res)=>{
+    const producto = contProductos.getAll()
+    res.render('tablas/tabla', {producto})
 })
 
 routers.post('/', (req, res)=>{
-    productos.push(req.body)
-    res.render('form', {productos})
+    const producto = contProductos.postProduct(req.body)
+    res.render('tablas/tabla', {producto})
 })
 
 
