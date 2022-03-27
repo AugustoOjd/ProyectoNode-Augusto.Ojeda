@@ -93,7 +93,7 @@ routers
     })
 
 routers.get('*', (req, res)=>{
-    res.send('Pagina no encontrada')
+    res.send(__dirname +'/public/index.html')
 })
 
     // app.get((req, res)=>{
