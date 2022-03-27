@@ -99,4 +99,4 @@ app.get('/', (req, res)=>{
   res.render('form', {producto})
 })
 
-// app.use(express.static("public"));
+app.use(express.static("public"))
