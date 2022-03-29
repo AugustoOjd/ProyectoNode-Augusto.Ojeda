@@ -9,8 +9,7 @@
 // app.use(express.urlencoded({extended: true}))
 // app.use('/api/productos', routers)
 
-const Contenedor = require('./contenedor')
-const contProductos = new Contenedor()
+
 
 
 // app.set('views', './views')
@@ -66,9 +65,17 @@ const express = require("express");
 const { Server: HttpServer } = require("http");
 const { Server: IOServer } = require("socket.io");
 
+
+const Contenedor = require('./contenedor')
+const contProductos = new Contenedor()
+
 const app = express();
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
+
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+
 
 app.set('views', './views')
 app.set('view engine', 'ejs')
@@ -78,9 +85,9 @@ httpServer.listen(8080, function () {
 });
 
 const messages = [
-  { author: "Juan", text: "¡Hola! ¿Que tal?" },
-  { author: "Pedro", text: "¡Muy bien! ¿Y vos?" },
-  { author: "Ana", text: "¡Genial!" },
+  // { author: "Juan", text: "¡Hola! ¿Que tal?" },
+  // { author: "Pedro", text: "¡Muy bien! ¿Y vos?" },
+  // { author: "Ana", text: "¡Genial!" },
 ];
 
 io.on("connection", socket=> {
@@ -93,10 +100,45 @@ io.on("connection", socket=> {
   });
 });
 
+// PRUEBA CON FILE SYSTEM
+
+// io.on("connection", socket=>{
+//   console.log('Cliente conectado al chat')
+//   const chats = contProductos.lecturaM()
+//   socket.emit("messages", chats )
+
+//   socket.on("new-message", data =>{
+//     const chat = contProductos.enviarM()
+//     io.sockets.emit("messages", chat)
+//   })
+// })
+
+
+// SOCKET TABLA
+
+io.on("connection", socket =>{
+  console.log('Cliente conectado a la tabla')
+
+  socket.on('products', (data)=>{
+    io.sockets.emit('products', data)
+    console.log(data)
+  })
+  
+})
+
+
+
+
+
 
 app.get('/', (req, res)=>{
   const producto = contProductos.getAll()
   res.render('form', {producto})
 })
+
+// app.post('/', (req, res)=>{
+//   const producto = contProductos.postProduct(req.body)
+//   res.render('form', {producto})
+// })
 
 app.use(express.static("public"))

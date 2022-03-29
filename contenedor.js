@@ -1,6 +1,8 @@
+const fs = require('fs');
 
 class Contenedor{
-    constructor(){
+    constructor(ruta){
+        this.ruta = ruta
         this.products = []
         this.id = 0
     }
@@ -64,16 +66,52 @@ class Contenedor{
         }
     }
 
+    // Leer y guardar mensaje del file chat.text
+
+    lecturaM(){
+        try{
+            let datos = fs.readFileSync(this.ruta, 'utf-8')
+            let mensaje = JSON.parse(datos)
+            return mensaje
+        }   
+        catch(e){
+            return console.log(e.message)
+        }
+    }
+
+    enviarM(chat){
+        try{
+            let datos = fs.writeFileSync(this.ruta, JSON.stringify(chat, null, 2))
+            chat = datos
+            return chat
+        }
+        catch(e){
+            return console.log(e.message)
+        }   
+    }
+
 
 }
 
-const productos = new Contenedor ()
+const productos = new Contenedor ('./chat.text')
 
 
-productos.getAll()
-productos.getById()
-productos.postProduct()
-productos.putProduct()
-productos.deleteById()
+// productos.getAll()
+// productos.getById()
+// productos.postProduct()
+// productos.putProduct()
+// productos.deleteById()
+
+productos.lecturaM()
+console.log(productos.lecturaM())
+productos.enviarM([{
+    correo: "asdad@asda.com",
+    mensaje: "hola"
+},
+{
+    correo: "asda222d@asda.com",
+    mensaje: "hola2"
+}
+])
 
 module.exports = Contenedor
