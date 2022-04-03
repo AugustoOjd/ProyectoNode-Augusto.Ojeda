@@ -7,6 +7,8 @@ const cont = new Conteiner('./productos.txt')
 
 const app = express()
 
+app.set('views', './views');
+app.set('view engine', 'ejs');
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
@@ -26,16 +28,19 @@ router1.get('/', async (req:any, res:any)=>{
     return res.status(200).json(all)
 })
 
+// router1.post('/', async (req:any, res:any)=>{
+//     try{
+//         let data = await cont.save(req.body)
+//         return res.status(200).json(data)
+//     }
+//     catch(e:any){
+//         console.log('error post server', e.message)
+//     }
+// })
+
 router1.post('/', async (req:any, res:any)=>{
-    try{
-        // let data = await cont.save(req.body)
-        // return res.status(200).json(data)
-        console.log(req.body.data)
-        return res.send('hola')
-    }
-    catch(e:any){
-        console.log('error post server', e.message)
-    }
+    let data = await cont.save(req.body)
+    res.render('form', {data})
 })
 
 router1.put('/:id', async (req:any, res:any)=>{

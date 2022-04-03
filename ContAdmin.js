@@ -109,25 +109,16 @@ class Conteiner {
 exports.Conteiner = Conteiner;
 const contenedor = new Conteiner('./productos.txt');
 // contenedor.getAll().then(res => console.log(res))
-contenedor.save({
-    nombre: "adolfo",
-    descripcion: "mira aqui esta",
-    codigo: "45345",
-    foto: "esto es url foto",
-    precio: 345,
-    stock: 3
-})
-    .then(res => console.log('res de contAdmin', res));
+contenedor.save().then(res => console.log(res));
+// contenedor.save({
+//     nombre: "adolfo",
+//     descripcion: "mira aqui esta",
+//     codigo: "45345",
+//     foto: "esto es url foto",
+//     precio: 345,
+//     stock: 3
+// })
+// .then(res=> console.log('res de contAdmin', res))
 // contenedor.deleteById()
-// contenedor.save(
-// {
-//     "nombre": "primero",
-//     "descripcion": "Esto es primero",
-//     "codigo": "codigo primero",
-//     "foto": "esto es url foto",
-//     "precio": 456,
-//     "stock": 4,
-// }
-// ).then(res => console.log(res))
 // contenedor.getAll().then(res => console.log(res))
 // contenedor.deleteAll()

@@ -1,12 +1,6 @@
 [
   {
-    "timestamp": 1648964977684,
-    "nombre": "adolfo",
-    "descripcion": "mira aqui esta",
-    "codigo": "45345",
-    "foto": "esto es url foto",
-    "precio": 345,
-    "stock": 3,
+    "timestamp": 1648997395865,
     "id": 1
   }
 ]
