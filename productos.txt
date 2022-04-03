@@ -1,5 +1,12 @@
 [
   {
-    "id": 0
+    "timestamp": 1648964977684,
+    "nombre": "adolfo",
+    "descripcion": "mira aqui esta",
+    "codigo": "45345",
+    "foto": "esto es url foto",
+    "precio": 345,
+    "stock": 3,
+    "id": 1
   }
 ]

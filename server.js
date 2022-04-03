@@ -29,11 +29,13 @@ router1.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 router1.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const data = yield cont.save(req.body);
-        return res.status(200).json(data);
+        // let data = await cont.save(req.body)
+        // return res.status(200).json(data)
+        console.log(req.body.data);
+        return res.send('hola');
     }
     catch (e) {
-        console.log(e.message);
+        console.log('error post server', e.message);
     }
 }));
 router1.put('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {

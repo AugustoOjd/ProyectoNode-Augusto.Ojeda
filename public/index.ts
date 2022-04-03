@@ -1,8 +1,8 @@
-
+const formAdmin = document.getElementById('formAdmin') as HTMLElement
 
 fetch('http://localhost:8080/api/productos')
     .then(res => res.json())
-    .then(data => {console.log(data)
+    .then(data => {console.log('esto es get', data)
 
         let datos = document.getElementById('api') as HTMLElement 
 
@@ -23,3 +23,21 @@ fetch('http://localhost:8080/api/productos')
         ) 
     
     })
+    
+
+// function post(){
+    
+//     console.log('click')
+let data = new FormData()
+
+    fetch('http://localhost:8080/api/productos', {
+        method:'POST',
+        headers:{
+            'Content-Type': 'aplication/json'
+        },
+        body: JSON.stringify({})
+    })
+    .then(res => res.json())
+    .then(data=> console.log('esto es post', data))
+
+// }

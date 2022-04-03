@@ -27,13 +27,14 @@ router1.get('/', async (req:any, res:any)=>{
 })
 
 router1.post('/', async (req:any, res:any)=>{
-    
     try{
-        const data = await cont.save(req.body)
-        return res.status(200).json(data)
+        // let data = await cont.save(req.body)
+        // return res.status(200).json(data)
+        console.log(req.body.data)
+        return res.send('hola')
     }
     catch(e:any){
-        console.log(e.message)
+        console.log('error post server', e.message)
     }
 })
 

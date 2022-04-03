@@ -1,8 +1,9 @@
 "use strict";
+const formAdmin = document.getElementById('formAdmin');
 fetch('http://localhost:8080/api/productos')
     .then(res => res.json())
     .then(data => {
-    console.log(data);
+    console.log('esto es get', data);
     let datos = document.getElementById('api');
     datos.innerHTML = data.map((e) => `
                 <ul>
@@ -17,3 +18,16 @@ fetch('http://localhost:8080/api/productos')
                 </ul>
             `);
 });
+// function post(){
+//     console.log('click')
+let data = new FormData();
+fetch('http://localhost:8080/api/productos', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'aplication/json'
+    },
+    body: JSON.stringify({})
+})
+    .then(res => res.json())
+    .then(data => console.log('esto es post', data));
+// }

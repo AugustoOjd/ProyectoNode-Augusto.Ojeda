@@ -40,16 +40,17 @@ class Conteiner {
     }
     save(datos) {
         return __awaiter(this, void 0, void 0, function* () {
+            // Seccion archivos opcion 1
             try {
                 let newProduct = {
-                    timestamp: datos.timestamp,
+                    timestamp: Date.now(),
                     nombre: datos.nombre,
                     descripcion: datos.descripcion,
                     codigo: datos.codigo,
                     foto: datos.foto,
                     precio: datos.precio,
                     stock: datos.stock,
-                    id: this.products.length,
+                    id: this.products.length + 1,
                 };
                 this.products.push(newProduct);
                 yield fs.promises.writeFile(this.ruta, JSON.stringify(this.products, null, 2));
@@ -58,40 +59,28 @@ class Conteiner {
             catch (e) {
                 console.log(e.message);
             }
-            // let productos = []
-            // let id = 0
-            // const newProduct= {
-            //     timestamp: datos ? datos.timestamp : undefined ,
-            //     nombre: datos ? datos.nombre : undefined,
-            //     descripcion: datos ? datos.descripcion : undefined,
-            //     codigo: datos ? datos.codigo : undefined,
-            //     foto:datos ? datos.foto : undefined,
-            //     precio: datos ? datos.precio : undefined,
-            //     stock: datos ? datos.stock : undefined,
-            //     id: id++,
-            // }
-            //     productos.push(newProduct)
-            // if (fs.existsSync(this.ruta)) {
-            //     let read = await fs.promises.readFile(this.ruta, 'utf-8')
-            //     productos = JSON.parse(read)
-            //     if (productos.length > 0) {
-            //         id = productos[productos.length - 1].id + 1
-            //         if(datos){
+            //  Seccion de archivos opcion 2
+            //     let productos = []
+            //     let id = 1
+            //     if (fs.existsSync(this.ruta)) {
+            //         let data = await fs.promises.readFile(this.ruta, 'utf-8')
+            //         productos = JSON.parse(data)
+            //         if (productos.length > 0) {
+            //             id = productos[productos.length - 1].id + 1
             //             datos.id = id
+            //         } else {
+            //         datos.id = 1
             //         }
-            //         else{
-            //             datos = [{}]
-            //         }
-            //     } 
-            // } 
-            // productos.push(datos)
-            // try{
-            //     let write = await fs.promises.writeFile(this.ruta, JSON.stringify(productos, null, 2))
-            //     return write
-            // }
-            // catch(e:any){
-            //     console.log(e.message)
-            // }
+            //     } else {
+            //         datos.id = 1
+            //     }
+            //     productos.push(datos)
+            //     try{
+            //         await fs.promises.writeFile(this.ruta, JSON.stringify(productos, null, 2))
+            //         return productos
+            //     }catch(e:any){
+            //         console.log(`hubo un error en guardar ${e.message}`)
+            //     }
         });
     }
     actualizar() {
@@ -119,19 +108,26 @@ class Conteiner {
 }
 exports.Conteiner = Conteiner;
 const contenedor = new Conteiner('./productos.txt');
-contenedor.getAll().then(res => console.log(res));
-contenedor.save([{}]).then(res => console.log(res));
+// contenedor.getAll().then(res => console.log(res))
+contenedor.save({
+    nombre: "adolfo",
+    descripcion: "mira aqui esta",
+    codigo: "45345",
+    foto: "esto es url foto",
+    precio: 345,
+    stock: 3
+})
+    .then(res => console.log('res de contAdmin', res));
 // contenedor.deleteById()
 // contenedor.save(
-//     {
-//         "timestamp": 12313,
-//         "nombre": "primero",
-//         "descripcion": "Esto es primero",
-//         "codigo": "codigo primero",
-//         "foto": "esto es url foto",
-//         "precio": 456,
-//         "stock": 4,
-//     }
+// {
+//     "nombre": "primero",
+//     "descripcion": "Esto es primero",
+//     "codigo": "codigo primero",
+//     "foto": "esto es url foto",
+//     "precio": 456,
+//     "stock": 4,
+// }
 // ).then(res => console.log(res))
 // contenedor.getAll().then(res => console.log(res))
 // contenedor.deleteAll()
