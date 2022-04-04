@@ -112,8 +112,8 @@ export class Conteiner{
 
             let fil = await datos.filter((e:any)=> e.id !== id)
 
-            let write = await fs.promises.writeFile(this.ruta, JSON.stringify(fil, null, 2))
-            return console.log(write)
+            await fs.promises.writeFile(this.ruta, JSON.stringify(fil, null, 2))
+            return fil
         }
         catch(e:any){
             console.log(e.message)
@@ -137,9 +137,11 @@ export class Conteiner{
 
 const contenedor = new Conteiner ('./productos.txt')
 
-// contenedor.getAll().then(res => console.log(res))
+// 
 
 contenedor.save().then(res => console.log(res))
+contenedor.deleteById() 
+contenedor.getAll()
 
 // contenedor.save({
 //     nombre: "adolfo",
@@ -151,7 +153,7 @@ contenedor.save().then(res => console.log(res))
 // })
 // .then(res=> console.log('res de contAdmin', res))
 
-// contenedor.deleteById()
+
 
 
 // contenedor.getAll().then(res => console.log(res))

@@ -9,16 +9,17 @@
     <!-- <script src="main.js"></script> -->
     <title>Primera entrega proyecto</title>
 </head>
-<body style="margin: 5% 30%; background-color: rgb(231, 231, 231);">
+<body style="display: flex; justify-content: center;">
 
+<div style="width: 50%; padding: 10px;">
 <form>
     <h1 style="text-align: center">Formulario Admin</h1>
     
     <form action="/api/productos" method="post" id="formAdmin">
-        <div class="mb-3">
+        <!-- <div class="mb-3">
             <label for="timestamp" class="form-label">Timestamp</label>
             <input type="text" class="form-control" name="timestamp" id="timestamp">
-        </div>
+        </div> -->
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre</label>
             <input type="text" class="form-control" name="nombre" id="nombre">
@@ -45,50 +46,37 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
         
-</form> 
+    </form> 
 
-<!-- tabla -->
-<!-- 
-    <h2 style="text-align: center">Tabla</h2>
-
-    <h2 style="color: yellowgreen; text-align: center">No hay productos</h2>
-
+    <h2 style="text-align: center">Datos api Administrador</h2>
     <table class="table">
         <thead>
             <tr>
+            <th scope="col">id</th>
+            <th scope="col">Timestamp</th>
             <th scope="col">Nombre</th>
-            <th scope="col">Precio</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Codigo</th>
             <th scope="col">Imagen</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Stock</th>
             </tr>
         </thead>
-        <tbody>
-
-                <tr>
-                    
-                        <td style="font-size: 20px;"></td>
-                        <td style="font-size: 20px;"></td>
-                        <td style="width: 50px; height: 50px;"><img src="" ></td>
-                    
-                </tr>
-            
-        </tbody>
-    </table> -->
-
-<!-- chat -->
-
-    <h2>Datos del api</h2>
-    <div id="api"></div>
-
-    <!-- <form onsubmit="addMessage(this)">
-        <input type="text" id="username" placeholder="Tu Nombre" >
-        <input type="text" id="texto" placeholder="Cuéntanos algo...">
-        <input type="submit" value="Enviar">
-    </form> -->
-
-    <!-- <h2>Hola prueba</h2>
-    <div class="tablas" id="tablaCont">
+        <tbody id="contTabla">
         
-    </div> -->
+        
+        
+        
+        </tbody>
+    </table>
+</div>
+
+<!-- Carrito -->
+
+<div style="width: 50%; padding: 10px;">
+    <h2 style="text-align: center;">Aqui va carrito</h2>
+    <div style="margin-left: 20%;" id="carrito"></div>
+</div>
 
 
     <script src="index.js"></script>

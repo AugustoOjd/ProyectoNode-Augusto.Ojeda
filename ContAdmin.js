@@ -97,8 +97,8 @@ class Conteiner {
                 let read = yield fs.promises.readFile(this.ruta, 'utf-8');
                 let datos = yield JSON.parse(read);
                 let fil = yield datos.filter((e) => e.id !== id);
-                let write = yield fs.promises.writeFile(this.ruta, JSON.stringify(fil, null, 2));
-                return console.log(write);
+                yield fs.promises.writeFile(this.ruta, JSON.stringify(fil, null, 2));
+                return fil;
             }
             catch (e) {
                 console.log(e.message);
@@ -108,8 +108,10 @@ class Conteiner {
 }
 exports.Conteiner = Conteiner;
 const contenedor = new Conteiner('./productos.txt');
-// contenedor.getAll().then(res => console.log(res))
+// 
 contenedor.save().then(res => console.log(res));
+contenedor.deleteById();
+contenedor.getAll();
 // contenedor.save({
 //     nombre: "adolfo",
 //     descripcion: "mira aqui esta",
@@ -119,6 +121,5 @@ contenedor.save().then(res => console.log(res));
 //     stock: 3
 // })
 // .then(res=> console.log('res de contAdmin', res))
-// contenedor.deleteById()
 // contenedor.getAll().then(res => console.log(res))
 // contenedor.deleteAll()
