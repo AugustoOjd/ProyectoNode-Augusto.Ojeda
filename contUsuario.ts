@@ -12,56 +12,107 @@ export class contUsuario{
 
     productsList:string = './productos.txt'
 
-    public async createCart(id?:number){
-        let read = await fs.promises.readFile(this.productsList, 'utf-8' )
-        let parse = JSON.parse(read)
-
-        parse.map((e:any) => {
-            this.carrito.push({
-                id: this.carrito.length + 1,
-                timestamp: Date.now(),
-                productos: {
-                    id: e.id,
-                    timestamp: e.timestamp,
-                    nombre: 'esto es nombre',
-                    descripcion: 'esto es descripcion',
-                    codigo: 2323,
-                    foto: 'foto',
-                    precio: 232,
-                    stock: 4
+    public async createCart(){
+        try {
+            let read = await fs.promises.readFile(this.ruta, 'utf-8' )
+            let parse = JSON.parse(read)
+            this.carrito = parse
+            
+            let carrito =
+                {
+                    id: this.carrito.length + 1,
+                    timestamp: Date.now(),
+                    productos: []
                 }
-            })
-        });
-        await fs.promises.writeFile(this.ruta, (JSON.stringify(this.carrito, null, 2)))
-        return this.carrito
+            this.carrito.push(carrito)
+            await fs.promises.writeFile(this.ruta, (JSON.stringify(this.carrito, null, 2)))
+            return carrito.id
+        } catch (e:any) {
+            return console.log(e.message)
+        }
+
     }
 
     public async deleteCart(id?:any){
         try {
             let read = await fs.promises.readFile(this.ruta, 'utf-8')
             let parse = JSON.parse(read)
+            this.carrito = parse
+            
+            let cart = await this.carrito.find((e:any)=> e.id == id) 
+            cart.productos = []
 
-            let filtro = parse.filter((e:any)=> e.id !== id)
+            let filtro = await this.carrito.filter((e:any)=> e.id !== id)
+
             await fs.promises.writeFile(this.ruta, (JSON.stringify(filtro, null, 2)))
             return filtro
         } catch (e:any) {
             console.log(e.message)
         }
 
-
-
     }
 
-    public async listar(){
+    public async listar(id?:number){
+        try {
+            let read = await fs.promises.readFile(this.ruta, 'utf-8')
+            let parse = JSON.parse(read)
+            this.carrito = parse
 
+            let find = await this.carrito.find((e:any)=> e.id == id)
+            let contenido = find.productos
+
+            return contenido
+        } catch (e:any) {
+            return console.log(e.message)
+        }
     }
 
-    public async getCart(){
+    public async pushProductToCart(id?:number){
+        try {
+            // carritos
+            let read = await fs.promises.readFile(this.ruta, 'utf-8')
+            let parse = JSON.parse(read)
+            this.carrito = parse
+            // lista productos
+            let read2 = await fs.promises.readFile(this.productsList, 'utf-8')
+            let parse2 = JSON.parse(read2)
 
+            let findProduct = await parse2.find((e:any)=> e.id == id)
+            let findCarrito = await this.carrito.find((e:any)=> e.id == id)
+            if(findCarrito && findProduct){
+                await findCarrito.productos.push(findProduct)
+                await fs.promises.writeFile(this.ruta, (JSON.stringify(this.carrito, null, 2)) )
+            
+                return this.carrito
+            }else{
+                console.log('error: no hay carrito o producto')
+            }
+            
+
+            
+        } catch (e:any) {
+            return console.log(e.message) 
+        }
     }
 
-    public async deleteProduct(){
+    public async deleteProductToCart(idCart?:number, idProduct?:number){
+        try {
+            let read = await fs.promises.readFile(this.ruta, 'utf-8')
+            let parse = JSON.parse(read)
+            this.carrito = parse
 
+            let findCart = await this.carrito.find((e:any)=> e.id == idCart)
+
+            let findProd = await findCart.productos.filter((e:any)=> e.id !== idProduct)
+            findCart.productos = findProd
+
+            await fs.promises.writeFile(this.ruta, (JSON.stringify(this.carrito, null, 2)))
+
+            return this.carrito
+
+        } catch (e:any) {
+            return console.log(e.message)  
+        }
     }
 }
 
@@ -69,3 +120,6 @@ const contU = new contUsuario('./carrito.txt')
 
 contU.createCart()
 contU.deleteCart()
+contU.listar()
+contU.pushProductToCart()
+contU.deleteProductToCart()

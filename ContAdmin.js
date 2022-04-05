@@ -8,9 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Conteiner = void 0;
-const fs = require('fs');
+const fs_1 = __importDefault(require("fs"));
 class Conteiner {
     constructor(ruta, products, id) {
         this.ruta = ruta;
@@ -23,7 +26,7 @@ class Conteiner {
     getAll(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let read = yield fs.promises.readFile(this.ruta, 'utf-8');
+                let read = yield fs_1.default.promises.readFile(this.ruta, 'utf-8');
                 let total = yield JSON.parse(read);
                 if (id) {
                     let find = yield total.find((e) => e.id === id);
@@ -40,8 +43,10 @@ class Conteiner {
     }
     save(datos) {
         return __awaiter(this, void 0, void 0, function* () {
-            // Seccion archivos opcion 1
             try {
+                let read = yield fs_1.default.promises.readFile(this.ruta, 'utf-8');
+                let parse = JSON.parse(read);
+                this.products = parse;
                 let newProduct = {
                     timestamp: Date.now(),
                     nombre: datos.nombre,
@@ -53,51 +58,52 @@ class Conteiner {
                     id: this.products.length + 1,
                 };
                 this.products.push(newProduct);
-                yield fs.promises.writeFile(this.ruta, JSON.stringify(this.products, null, 2));
+                yield fs_1.default.promises.writeFile(this.ruta, JSON.stringify(this.products, null, 2));
                 return this.products;
             }
             catch (e) {
                 console.log(e.message);
             }
-            //  Seccion de archivos opcion 2
-            //     let productos = []
-            //     let id = 1
-            //     if (fs.existsSync(this.ruta)) {
-            //         let data = await fs.promises.readFile(this.ruta, 'utf-8')
-            //         productos = JSON.parse(data)
-            //         if (productos.length > 0) {
-            //             id = productos[productos.length - 1].id + 1
-            //             datos.id = id
-            //         } else {
-            //         datos.id = 1
-            //         }
-            //     } else {
-            //         datos.id = 1
-            //     }
-            //     productos.push(datos)
-            //     try{
-            //         await fs.promises.writeFile(this.ruta, JSON.stringify(productos, null, 2))
-            //         return productos
-            //     }catch(e:any){
-            //         console.log(`hubo un error en guardar ${e.message}`)
-            //     }
         });
     }
-    actualizar() {
+    actualizar(id, product) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                let producto = {
+                    timestamp: Date.now(),
+                    nombre: product.nombre,
+                    descripcion: product.descripcion,
+                    codigo: product.codigo,
+                    foto: product.foto,
+                    precio: product.precio,
+                    stock: product.stock,
+                    id: id
+                };
+                let read = yield fs_1.default.promises.readFile(this.ruta, 'utf-8');
+                let parse = JSON.parse(read);
+                this.products = parse;
+                if (id) {
+                    let find = yield this.products.find((e) => e.id == id);
+                    yield this.products.splice(find, 1, producto);
+                    yield fs_1.default.promises.writeFile(this.ruta, (JSON.stringify(this.products, null, 2)));
+                    return this.products;
+                }
+                else {
+                    return console.log('no existe ese producto');
+                }
             }
             catch (e) {
+                console.log(e.message);
             }
         });
     }
     deleteById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let read = yield fs.promises.readFile(this.ruta, 'utf-8');
+                let read = yield fs_1.default.promises.readFile(this.ruta, 'utf-8');
                 let datos = yield JSON.parse(read);
                 let fil = yield datos.filter((e) => e.id !== id);
-                yield fs.promises.writeFile(this.ruta, JSON.stringify(fil, null, 2));
+                yield fs_1.default.promises.writeFile(this.ruta, JSON.stringify(fil, null, 2));
                 return fil;
             }
             catch (e) {
@@ -108,18 +114,7 @@ class Conteiner {
 }
 exports.Conteiner = Conteiner;
 const contenedor = new Conteiner('./productos.txt');
-// 
-contenedor.save().then(res => console.log(res));
+contenedor.save();
 contenedor.deleteById();
 contenedor.getAll();
-// contenedor.save({
-//     nombre: "adolfo",
-//     descripcion: "mira aqui esta",
-//     codigo: "45345",
-//     foto: "esto es url foto",
-//     precio: 345,
-//     stock: 3
-// })
-// .then(res=> console.log('res de contAdmin', res))
-// contenedor.getAll().then(res => console.log(res))
-// contenedor.deleteAll()
+contenedor.actualizar();
