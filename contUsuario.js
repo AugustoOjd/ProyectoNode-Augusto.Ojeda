@@ -25,28 +25,24 @@ class contUsuario {
         this.carrito = [];
         this.id;
     }
-    createCart(id) {
+    createCart() {
         return __awaiter(this, void 0, void 0, function* () {
-            let read = yield fs_1.default.promises.readFile(this.productsList, 'utf-8');
-            let parse = JSON.parse(read);
-            parse.map((e) => {
-                this.carrito.push({
+            try {
+                let read = yield fs_1.default.promises.readFile(this.ruta, 'utf-8');
+                let parse = JSON.parse(read);
+                this.carrito = parse;
+                let carrito = {
                     id: this.carrito.length + 1,
                     timestamp: Date.now(),
-                    productos: {
-                        id: e.id,
-                        timestamp: e.timestamp,
-                        nombre: 'esto es nombre',
-                        descripcion: 'esto es descripcion',
-                        codigo: 2323,
-                        foto: 'foto',
-                        precio: 232,
-                        stock: 4
-                    }
-                });
-            });
-            yield fs_1.default.promises.writeFile(this.ruta, (JSON.stringify(this.carrito, null, 2)));
-            return this.carrito;
+                    productos: []
+                };
+                this.carrito.push(carrito);
+                yield fs_1.default.promises.writeFile(this.ruta, (JSON.stringify(this.carrito, null, 2)));
+                return carrito.id;
+            }
+            catch (e) {
+                return console.log(e.message);
+            }
         });
     }
     deleteCart(id) {
@@ -54,7 +50,10 @@ class contUsuario {
             try {
                 let read = yield fs_1.default.promises.readFile(this.ruta, 'utf-8');
                 let parse = JSON.parse(read);
-                let filtro = parse.filter((e) => e.id !== id);
+                this.carrito = parse;
+                let cart = yield this.carrito.find((e) => e.id == id);
+                cart.productos = [];
+                let filtro = yield this.carrito.filter((e) => e.id !== id);
                 yield fs_1.default.promises.writeFile(this.ruta, (JSON.stringify(filtro, null, 2)));
                 return filtro;
             }
@@ -63,16 +62,62 @@ class contUsuario {
             }
         });
     }
-    listar() {
+    listar(id) {
         return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let read = yield fs_1.default.promises.readFile(this.ruta, 'utf-8');
+                let parse = JSON.parse(read);
+                this.carrito = parse;
+                let find = yield this.carrito.find((e) => e.id == id);
+                let contenido = find.productos;
+                return contenido;
+            }
+            catch (e) {
+                return console.log(e.message);
+            }
         });
     }
-    getCart() {
+    pushProductToCart(id) {
         return __awaiter(this, void 0, void 0, function* () {
+            try {
+                // carritos
+                let read = yield fs_1.default.promises.readFile(this.ruta, 'utf-8');
+                let parse = JSON.parse(read);
+                this.carrito = parse;
+                // lista productos
+                let read2 = yield fs_1.default.promises.readFile(this.productsList, 'utf-8');
+                let parse2 = JSON.parse(read2);
+                let findProduct = yield parse2.find((e) => e.id == id);
+                let findCarrito = yield this.carrito.find((e) => e.id == id);
+                if (findCarrito && findProduct) {
+                    yield findCarrito.productos.push(findProduct);
+                    yield fs_1.default.promises.writeFile(this.ruta, (JSON.stringify(this.carrito, null, 2)));
+                    return this.carrito;
+                }
+                else {
+                    console.log('error: no hay carrito o producto');
+                }
+            }
+            catch (e) {
+                return console.log(e.message);
+            }
         });
     }
-    deleteProduct() {
+    deleteProductToCart(idCart, idProduct) {
         return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let read = yield fs_1.default.promises.readFile(this.ruta, 'utf-8');
+                let parse = JSON.parse(read);
+                this.carrito = parse;
+                let findCart = yield this.carrito.find((e) => e.id == idCart);
+                let findProd = yield findCart.productos.filter((e) => e.id !== idProduct);
+                findCart.productos = findProd;
+                yield fs_1.default.promises.writeFile(this.ruta, (JSON.stringify(this.carrito, null, 2)));
+                return this.carrito;
+            }
+            catch (e) {
+                return console.log(e.message);
+            }
         });
     }
 }
@@ -80,3 +125,6 @@ exports.contUsuario = contUsuario;
 const contU = new contUsuario('./carrito.txt');
 contU.createCart();
 contU.deleteCart();
+contU.listar();
+contU.pushProductToCart();
+contU.deleteProductToCart();

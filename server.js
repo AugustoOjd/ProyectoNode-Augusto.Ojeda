@@ -26,12 +26,8 @@ app.use('/api/productos', router1);
 app.use('/api/carrito', router2);
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log('server on'));
+let administrador;
 // ---- Ruta no encontrada
-// app.get('*', (req:any, res:any)=>{
-//     res.send({
-//         error : -2,
-//         descripcion: `ruta , método 'get' no implementada`})
-// })
 // ----------------Ruta de solo Administradores
 router1.get('/:id?', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const all = yield cont.getAll(parseInt(req.params.id));
@@ -48,8 +44,11 @@ router1.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 router1.put('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        let data = yield cont.actualizar(parseInt(req.params.id), req.body);
+        return res.status(200).json(data);
     }
     catch (e) {
+        console.log('error en act producto admin', e.message);
     }
 }));
 router1.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -62,28 +61,21 @@ router1.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 }));
 // ----------------- Ruta de Admin y usuarios
-// post carrito
-router2.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const datos = yield contU.createCart();
-        return res.status(200).json(datos);
-    }
-    catch (e) {
-        return console.log(e.message);
-    }
-}));
+// crea un carrito
 router2.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const datos = yield contU.createCart(req.body);
+        let datos = yield contU.createCart();
         return res.status(200).json(datos);
     }
     catch (e) {
         return console.log(e.message);
     }
 }));
-// push products by id
-router2.post('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+// push products by id al carrito
+router2.post('/:id/productos', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        let datos = yield contU.pushProductToCart(req.params.id);
+        return res.status(200).json(datos);
     }
     catch (e) {
         return console.log(e.message);
@@ -92,22 +84,28 @@ router2.post('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* (
 // Listar productos del carrito
 router2.get('/:id/productos', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        let datos = yield contU.listar(parseInt(req.params.id));
+        return res.status(200).json(datos);
     }
     catch (e) {
         return console.log(e.message);
     }
 }));
 // Vaciar el carrito y eliminarlo
-router2.delete('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router2.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        let datos = yield contU.deleteCart(parseInt(req.params.id));
+        return res.status(200).json(datos);
     }
     catch (e) {
         return console.log(e.message);
     }
 }));
 // Eliminar un producto del carrito por id
-router2.delete('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router2.delete('/:id/productos/:id_prod', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        let datos = yield contU.deleteProductToCart(parseInt(req.params.id), parseInt(req.params.id));
+        return res.status(200).json(datos);
     }
     catch (e) {
         return console.log(e.message);

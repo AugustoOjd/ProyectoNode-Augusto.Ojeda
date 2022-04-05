@@ -25,12 +25,11 @@ const PORT = process.env.PORT || 8080
 app.listen(PORT, ()=>console.log('server on'))
 
 
+let administrador:boolean
+
+
 // ---- Ruta no encontrada
-// app.get('*', (req:any, res:any)=>{
-//     res.send({
-//         error : -2,
-//         descripcion: `ruta , método 'get' no implementada`})
-// })
+
 
 // ----------------Ruta de solo Administradores
 
@@ -51,10 +50,11 @@ router1.post('/', async (req:any, res:any)=>{
 
 router1.put('/:id', async (req:any, res:any)=>{
     try{
-
+        let data = await cont.actualizar(parseInt(req.params.id), req.body)
+        return res.status(200).json(data)
     }
-    catch(e){
-
+    catch(e:any){
+        console.log('error en act producto admin', e.message)
     }
 })
 
@@ -73,31 +73,21 @@ router1.delete('/:id', async (req:any, res:any)=>{
 // ----------------- Ruta de Admin y usuarios
 
 
-// post carrito
-
-router2.get('/',async (req:any, res:any) => {
-    try {
-        const datos = await contU.createCart()
-        return res.status(200).json(datos)
-    } catch (e:any) {
-        return console.log(e.message)
-    }
-})
-
-
+// crea un carrito
 router2.post('/',async (req:any, res:any) => {
     try {
-        const datos = await contU.createCart(req.body)
+        let datos = await contU.createCart()
         return res.status(200).json(datos)
     } catch (e:any) {
         return console.log(e.message)
     }
 })
 
-// push products by id
-router2.post('/:id',async (req:any, res:any) => {
+// push products by id al carrito
+router2.post('/:id/productos',async (req:any, res:any) => {
     try {
-        
+        let datos = await contU.pushProductToCart(req.params.id)
+        return res.status(200).json(datos)
     } catch (e:any) {
         return console.log(e.message)
     }
@@ -106,25 +96,28 @@ router2.post('/:id',async (req:any, res:any) => {
 // Listar productos del carrito
 router2.get('/:id/productos',async (req:any, res:any) => {
     try {
-        
+        let datos = await contU.listar(parseInt(req.params.id))
+        return res.status(200).json(datos)
     } catch (e:any) {
         return console.log(e.message)
     }
 })
 
 // Vaciar el carrito y eliminarlo
-router2.delete('/',async (req:any, res:any) => {
+router2.delete('/:id',async (req:any, res:any) => {
     try {
-        
+        let datos = await contU.deleteCart(parseInt(req.params.id))
+        return res.status(200).json(datos)
     } catch (e:any) {
         return console.log(e.message)
     }
 })
 
 // Eliminar un producto del carrito por id
-router2.delete('/',async (req:any, res:any) => {
+router2.delete('/:id/productos/:id_prod',async (req:any, res:any) => {
     try {
-        
+        let datos = await contU.deleteProductToCart(parseInt(req.params.id), parseInt(req.params.id))
+        return res.status(200).json(datos)
     } catch (e:any) {
         return console.log(e.message)
     }
