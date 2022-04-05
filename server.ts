@@ -1,5 +1,5 @@
-import {Conteiner} from './ContAdmin';
-import {contUsuario} from './contUsuario';
+import {Conteiner} from './contProductos';
+import {contUsuario} from './contCarrito';
 
 const express = require('express')
 const router1 = express.Router();

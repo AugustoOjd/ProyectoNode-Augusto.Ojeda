@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/AugustoOjd/ProyectoNode-Augusto.Ojeda#readme",
   "dependencies": {
+    "@types/express": "^4.17.13",
     "ejs": "^3.1.6",
     "express": "^4.17.3",
     "hbs": "^4.2.0",

@@ -1,4 +1,5 @@
 import fs from 'fs'
+import { Producto } from './interface'
 
 export class Conteiner{
     
@@ -32,22 +33,12 @@ export class Conteiner{
 
     public async save(datos?:any){
         
-        type admin = {
-            timestamp: number,
-            nombre: string,
-            descripcion: string,
-            codigo: string,
-            foto: string,
-            precio: number,
-            stock: number,
-            id: number
-        }
         
         try{
             let read = await fs.promises.readFile(this.ruta, 'utf-8')
             let parse = JSON.parse(read)
             this.products = parse
-            let newProduct: admin = {
+            let newProduct: Producto = {
                 timestamp: Date.now(),
                 nombre: datos.nombre,
                 descripcion: datos.descripcion,
