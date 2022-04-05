@@ -1,0 +1,48 @@
+[
+  {
+    "id": 3,
+    "timestamp": 1649124063773,
+    "productos": [
+      {
+        "timestamp": 1649118657007,
+        "id": 3
+      },
+      {
+        "timestamp": 1649118657007,
+        "id": 3
+      },
+      {
+        "timestamp": 1649118657007,
+        "id": 3
+      },
+      {
+        "timestamp": 1649118657007,
+        "id": 3
+      },
+      {
+        "timestamp": 1649118657007,
+        "id": 3
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "timestamp": 1649195360605,
+    "productos": []
+  },
+  {
+    "id": 3,
+    "timestamp": 1649196856129,
+    "productos": []
+  },
+  {
+    "id": 5,
+    "timestamp": 1649196945868,
+    "productos": []
+  },
+  {
+    "id": 6,
+    "timestamp": 1649196951222,
+    "productos": []
+  }
+]
