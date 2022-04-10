@@ -1,10 +1,10 @@
 export interface Producto {
     timestamp: number,
-    nombre: string,
-    descripcion: string,
-    codigo: string,
+    name: string,
+    description: string,
+    code: string,
     foto: string,
-    precio: number,
+    price: number,
     stock: number,
-    id: number
+    id?: number
 }

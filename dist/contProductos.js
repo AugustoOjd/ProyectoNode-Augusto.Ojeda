@@ -49,11 +49,11 @@ class Conteiner {
                 this.products = parse;
                 let newProduct = {
                     timestamp: Date.now(),
-                    nombre: datos.nombre,
-                    descripcion: datos.descripcion,
-                    codigo: datos.codigo,
+                    name: datos.name,
+                    description: datos.description,
+                    code: datos.codigo,
                     foto: datos.foto,
-                    precio: datos.precio,
+                    price: datos.price,
                     stock: datos.stock,
                     id: this.products.length + 1,
                 };
