@@ -1,12 +1,10 @@
-import { opcion } from './options/mariaDB';
-import { option } from './options/sqliteDB';
-// // import knex from 'knex';
-// const {opcion} = require('./options/mariaDB')
-const knex = require('knex')(option)
+const {optionMDb} =  require('./options/mariaDB');
+const {optionSqlite}= require('./options/sqliteDB');
+const knex = require('knex')(optionSqlite)
 
 const create = async ()=>{
     try{
-        await knex.schema.createTable('products', (table:any) => {
+        await knex.schema.createTable('products', (table) => {
             table.increments('id')
             table.integer('timestamp')
             table.string('name')
@@ -18,7 +16,7 @@ const create = async ()=>{
         })
         console.log('tabla creada')
     }
-    catch(e:any){
+    catch(e){
         console.log(e.message)
     }
     finally{
@@ -30,14 +28,15 @@ const create = async ()=>{
 
 const createSqlite = async ()=>{
     try{
-        await knex.schema.createTable('ecommerce', (table:any) => {
+        await knex.schema.createTable('ecommerce', (table) => {
             table.increments('id')
-            table.string('correo')
-            table.string('mensaje')
+            table.string('email')
+            table.string('date')
+            table.string('message')
         })
         console.log('tabla sql creada')
     }
-    catch(e:any){
+    catch(e){
         console.log(e.message)
     }
     finally{
