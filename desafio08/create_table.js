@@ -6,13 +6,9 @@ const create = async ()=>{
     try{
         await knex.schema.createTable('products', (table) => {
             table.increments('id')
-            table.integer('timestamp')
-            table.string('name')
-            table.string('description')
-            table.string('code')
-            table.string('foto')
+            table.string('title')
             table.integer('price')
-            table.integer('stock')
+            table.string('thumbnail')
         })
         console.log('tabla creada')
     }
@@ -28,13 +24,12 @@ const create = async ()=>{
 
 const createSqlite = async ()=>{
     try{
-        await knex.schema.createTable('ecommerce', (table) => {
-            table.increments('id')
+        await knex.schema.createTable('message', (table) => {
             table.string('email')
             table.string('date')
             table.string('message')
         })
-        console.log('tabla sql creada')
+        console.log('tabla sqlite creada')
     }
     catch(e){
         console.log(e.message)
