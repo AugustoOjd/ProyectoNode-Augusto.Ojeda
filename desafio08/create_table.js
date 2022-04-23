@@ -24,7 +24,7 @@ const create = async ()=>{
 
 const createSqlite = async ()=>{
     try{
-        await knex.schema.createTable('message', (table) => {
+        await knex.schema.createTable('messages', (table) => {
             table.string('email')
             table.string('date')
             table.string('message')

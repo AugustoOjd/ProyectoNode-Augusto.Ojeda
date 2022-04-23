@@ -31,9 +31,9 @@ io.on("connection", async socket=>{
   
   socket.on("new-message", async data =>{
     const chat = await contMessages.saveChat({
-      correo: data.correo,
+      email: data.correo,
       date: new Date().toDateString(),
-      mensaje: data.mensaje
+      message: data.mensaje
     })
     io.sockets.emit("messages", chat) 
   })
@@ -47,7 +47,7 @@ io.on("connection", async socket =>{
   socket.emit('products', await contProductos.getAll())
 
   socket.on('products', async data=>{
-    await contProductos.postProduct(data)
+    await contProductos.save(data)
     io.sockets.emit('products', await contProductos.getAll())
     console.log(data)
   })

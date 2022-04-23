@@ -9,32 +9,26 @@ class ConteinerMsg{
     async readChat(idMsg){
         try{
             if(idMsg){
-                let show = await this.knex.from('ecommerce').select("*").where({id: idMsg})
+                let show = await this.knex.from('messages').select("*").where({id: idMsg})
                 return show
             }
             else{
-                let show = await this.knex.from('ecommerce').select("*")
+                let show = await this.knex.from('messages').select("*")
                 return show
             }
         }   
         catch(e){
             return console.log(e.message)
         }
-        finally{
-            this.knex.destroy()
-        }
     }
 
     async saveChat(chat){
         try{
-            return await this.knex.from('ecommerce').insert(chat)
+            return await this.knex.from('messages').insert(chat)
         }
         catch(e){
             return this.console.log(e.message)
-        }
-        finally{
-            knex.destroy()
-        }   
+        }  
     }
 
 }
