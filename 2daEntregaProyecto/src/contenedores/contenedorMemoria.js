@@ -1,4 +1,4 @@
-class ContenedorMemoria{
+export default class ContenedorMemoria{
     constructor(){
         this.container = []
     }
@@ -12,10 +12,10 @@ class ContenedorMemoria{
         }
     }
 
-    async getId(idDatos){
+    async getId(idDato){
         try {
-            if(this.container.some(e=> e.id == idDatos)){
-                let data = await this.container.find(e=> e.id == idDatos)
+            if(this.container.some(e=> e.id == idDato)){
+                let data = await this.container.find(e=> e.id == idDato)
                 return data
             }else{
                 return this.container
@@ -56,35 +56,35 @@ class ContenedorMemoria{
 
 }
 
-const contenedorM = new ContenedorMemoria()
+// const contenedorM = new ContenedorMemoria()
 
-contenedorM.save(
-    {
-        id: 1,
-        title: "hola",
-        price: 200,
-        thumbnail: "link img"
-    }
-)
+// contenedorM.save(
+//     {
+//         id: 1,
+//         title: "hola",
+//         price: 200,
+//         thumbnail: "link img"
+//     }
+// )
 
-contenedorM.save(
-    {
-    id: 2,
-    title: "chao",
-    price: 450,
-    thumbnail: "link img2"
-    }
-)
-contenedorM.save(
-    {
-    id: 3,
-    title: "hello",
-    price: 800,
-    thumbnail: "link img3"
-    }
-).then(res => console.log(res))
+// contenedorM.save(
+//     {
+//     id: 2,
+//     title: "chao",
+//     price: 450,
+//     thumbnail: "link img2"
+//     }
+// )
+// contenedorM.save(
+//     {
+//     id: 3,
+//     title: "hello",
+//     price: 800,
+//     thumbnail: "link img3"
+//     }
+// ).then(res => console.log(res))
 
-contenedorM.deteleById(3).then(res => console.log('esto es filtro', res))
+// contenedorM.deteleById(3).then(res => console.log('esto es filtro', res))
 
 // contenedorM.update(2,     {
 //     id: 5,

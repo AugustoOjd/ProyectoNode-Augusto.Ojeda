@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-class ContenedorArchivos{
+export default class ContenedorArchivos{
     constructor(ruta){
         this.ruta = ruta
         this.container = []
@@ -87,7 +87,7 @@ class ContenedorArchivos{
     }
 }
 
-const contenedorA = new ContenedorArchivos('./datos.txt')
+// const contenedorA = new ContenedorArchivos('./datos.txt')
 
 // contenedorA.save({
 //     title: "fs hola",
@@ -103,4 +103,4 @@ const contenedorA = new ContenedorArchivos('./datos.txt')
 //     thumbnail: "fs link img update"
 // }).then(res=> console.log(res))
 
-contenedorA.deleteById(2).then(res=> console.log(res)) 
+// contenedorA.deleteById(2).then(res=> console.log(res)) 

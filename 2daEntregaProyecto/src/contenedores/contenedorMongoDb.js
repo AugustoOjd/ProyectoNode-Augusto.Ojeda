@@ -4,7 +4,7 @@ import * as model from "./models/productos.js"
 // const datos = require('./models/productos.js')
 
 
-class ContenedorMongoDb{
+export default class ContenedorMongoDb{
     constructor(){
 
     }
@@ -22,14 +22,14 @@ class ContenedorMongoDb{
         }
     }
 
-    async save(){
+    async save(datos){
 
     }
 
     async getId(idData){
         try {
             // if()
-            let datos = await model.productos.find({}, {name: 1})
+            let datos = await model.productos.find()
             return datos
         } catch (e) {
             return console.log(e.message)
