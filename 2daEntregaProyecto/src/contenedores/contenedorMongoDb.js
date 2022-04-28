@@ -5,8 +5,8 @@ import * as model from "./models/productos.js"
 
 
 export default class ContenedorMongoDb{
-    constructor(){
-
+    constructor( collection, schema){
+        this.collection = mongoose.model(collection, schema)
     }
     
     async conection(){
@@ -23,14 +23,23 @@ export default class ContenedorMongoDb{
     }
 
     async save(datos){
-
+        try {
+            let data = new this.collection(datos)
+            let dataSave = await data.save()
+            return dataSave
+        } catch (e) {
+            console.log(e.message)
+        }
     }
 
     async getId(idData){
         try {
-            // if()
-            let datos = await model.productos.find()
-            return datos
+            if(idData){
+                let datos = await this.collection.find({_id: idData})
+                return datos
+            }else{
+                return await this.collection.find({})
+            }
         } catch (e) {
             return console.log(e.message)
         }
@@ -38,7 +47,8 @@ export default class ContenedorMongoDb{
 
     async update(nameData, newData){
         try {
-            let datos = await model.productos.updateOne({name: nameData}, {$set: {name: newData}})
+            let datos = await this.collection.updateOne({name: nameData}, {$set: {name: newData}})
+            // let datos = await model.productos.updateOne({name: nameData}, {$set: {name: newData}})
             return datos
         } catch (e) {
             return console.log(e.message)
@@ -51,8 +61,8 @@ export default class ContenedorMongoDb{
 
 }
 
-const contenedorMongo = new ContenedorMongoDb()
+// const contenedorMongo = new ContenedorMongoDb()
 
-contenedorMongo.conection()
-contenedorMongo.getId().then(res=> console.log(res))
+// contenedorMongo.conection()
+// contenedorMongo.getId().then(res=> console.log(res))
 // contenedorMongo.update('laptop hp', "laptop razer").then(res=> console.log(res))

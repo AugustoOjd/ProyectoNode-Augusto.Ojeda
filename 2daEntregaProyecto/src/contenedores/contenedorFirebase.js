@@ -6,7 +6,9 @@ export default class ContenedorFirebase{
         this.query = db.collection('productos')
     }
 
-    
+    async conetion(){
+        
+    }
 
     async save(datos){
         var admin = require("firebase-admin");

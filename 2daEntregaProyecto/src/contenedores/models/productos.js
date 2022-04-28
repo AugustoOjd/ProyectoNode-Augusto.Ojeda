@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 const productColletion = 'productos'
 
-const ProductosSchemma = new mongoose.Schema({
+export const ProductosSchemma = new mongoose.Schema({
     id: {type: Number, require: true, max: 100},
     title: {type: String, require: true, max: 100},
     price: {type: Number, require: true, max: 100},

@@ -1,11 +1,18 @@
-import ContenedorArchivos from "../../contenedores/contenedorArchivo";
+import ContenedorArchivos from "../../contenedores/contenedorArchivo.js";
 
 export default class ProductosDaoArchivo extends ContenedorArchivos{
     constructor(){
-        super('DB/productos.js')
+        super('DB/productos.json') 
     }
 
-    async save(){
-        
-    }
 } 
+
+// const productos = new ProductosDaoArchivo()
+
+// productos.save({
+//     title: "fs hola",
+//     price: 4512,
+//     thumbnail: "fs link img"
+// }).then(res=> console.log(res)) 
+
+// productos.getId().then(res => console.log(res)) 
